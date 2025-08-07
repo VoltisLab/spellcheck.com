@@ -15,7 +15,6 @@ import {
   Calendar,
   Mail,
   FileText,
-  AlertTriangle,
   Info,
   Eye
 } from 'lucide-react';

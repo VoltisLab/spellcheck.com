@@ -133,8 +133,10 @@ const ContactUsPage: React.FC = () => {
         message: '',
         inquiryType: 'general'
       });
-    } catch (error) {
-      setSubmitStatus('error');
+    } catch (e) {
+      console.log("error", e);
+      
+      setSubmitStatus("error");
     } finally {
       setIsSubmitting(false);
     }
@@ -175,7 +177,7 @@ const ContactUsPage: React.FC = () => {
               maxWidth: '32rem',
               margin: '0 auto'
             }}>
-              Have questions about SpellCheck? Need technical support? We're here to help you improve your spelling journey.
+             {" Have questions about SpellCheck? Need technical support? We're here to help you improve your spelling journey"}.
             </p>
           </motion.div>
         </div>
@@ -270,7 +272,7 @@ const ContactUsPage: React.FC = () => {
                 fontSize: '1.125rem',
                 color: currentTheme.textSecondary
               }}>
-                Fill out the form below and we'll get back to you as soon as possible.
+                {"Fill out the form below and we'll get back to you as soon as possible."}
               </p>
             </motion.div>
 
@@ -301,7 +303,7 @@ const ContactUsPage: React.FC = () => {
                   }}
                 >
                   <CheckCircle className="h-5 w-5" />
-                  <span>Thank you! Your message has been sent successfully. We'll get back to you soon.</span>
+                  <span>{"Thank you! Your message has been sent successfully. We'll get back to you soon."}</span>
                 </motion.div>
               )}
 
@@ -665,8 +667,7 @@ const ContactUsPage: React.FC = () => {
                 Can I schedule a meeting or demo?
               </h3>
               <p style={{ color: currentTheme.textSecondary }}>
-                Absolutely! For business partnerships or educational institution inquiries, we're happy to schedule a personalized demo. Use the contact form above and select "Business Partnership" to get started.
-              </p>
+{"Absolutely! For business partnerships or educational institution inquiries, we're happy to schedule a personalized demo. Use the contact form above and select 'Business Partnership' to get started."}              </p>
             </motion.div>
           </div>
         </div>

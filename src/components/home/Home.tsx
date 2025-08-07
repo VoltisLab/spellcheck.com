@@ -1,6 +1,6 @@
 'use client'
 import React, { useState, useEffect } from 'react';
-import { Moon, Sun, Menu, X, Clock, Trophy, Brain, Zap } from 'lucide-react';
+import {  Clock, Trophy, Brain, Zap } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { THEME } from '@/utils/theme';
 import { useTheme } from '@/app/ThemeContext';
@@ -8,10 +8,7 @@ import { useTheme } from '@/app/ThemeContext';
 // Custom theme colors - expanded for comprehensive theming
 
 // Define types
-type NavItem = {
-  name: string;
-  href: string;
-};
+
 
 type Feature = {
   title: string;
