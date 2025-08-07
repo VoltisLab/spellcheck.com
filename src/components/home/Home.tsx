@@ -2,44 +2,10 @@
 import React, { useState, useEffect } from 'react';
 import { Moon, Sun, Menu, X, Clock, Trophy, Brain, Zap } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { THEME } from '@/utils/theme';
+import { useTheme } from '@/app/ThemeContext';
 
 // Custom theme colors - expanded for comprehensive theming
-const THEME = {
-  light: {
-    red: '#A53E3E',
-    blue: '#467091',
-    darkBlue: '#3E4C7C',
-    primary: '#FFFFFF',
-    secondary: '#F5F5F5',
-    text: '#1F1F1F',
-    textSecondary: '#4B5563',
-    accent: '#A53E3E',
-    // Additional colors for specific sections
-    bgMain: '#FFFFFF',
-    bgSecondary: '#F5F5F5',
-    bgHero: 'linear-gradient(to bottom, #FFFFFF, #F5F5F5)',
-    bgCard: '#F5F5F5',
-    navBg: '#FFFFFF',
-    footerBg: '#1F2937'
-  },
-  dark: {
-    red: '#A53E3E',
-    blue: '#467091',
-    darkBlue: '#3E4C7C',
-    primary: '#000000',
-    secondary: '#1F1F1F',
-    text: '#FFFFFF', 
-    textSecondary: '#9CA3AF',
-    accent: '#A53E3E',
-    // Additional colors for specific sections
-    bgMain: '#000000',
-    bgSecondary: '#1F1F1F',
-    bgHero: 'linear-gradient(to bottom, #111827, #000000)',
-    bgCard: '#1F1F1F',
-    navBg: '#000000',
-    footerBg: '#000000'
-  }
-};
 
 // Define types
 type NavItem = {
@@ -61,50 +27,17 @@ type TestimonialType = {
 
 // App component
 const SpellCheckLandingPage: React.FC = () => {
-  const [darkMode, setDarkMode] = useState<boolean>(true); // Default to dark mode
-  const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
+  const {darkMode, currentTheme} = useTheme()
   const [countdown, setCountdown] = useState<number>(60);
   const [currentWordIndex, setCurrentWordIndex] = useState<number>(0);
   const [isTyping, setIsTyping] = useState<boolean>(false);
-  const [currentTheme, setCurrentTheme] = useState(THEME.dark); // Default to dark theme
 
   // Demo words for animation
   const demoWords: string[] = ["UNTILL", "TRUELY", "TOMMORROW", "RECIEVE", "BELEIVE"];
   const correctWords: string[] = ["UNTIL", "TRULY", "TOMORROW", "RECEIVE", "BELIEVE"];
 
   // Initialize theme from localStorage or default to dark mode
-  useEffect(() => {
-    const savedMode = localStorage.getItem('darkMode');
-    const initialDarkMode = savedMode !== null 
-      ? JSON.parse(savedMode) 
-      : true; // Default to dark mode
-    
-    setDarkMode(initialDarkMode);
-    setCurrentTheme(initialDarkMode ? THEME.dark : THEME.light);
-    
-    // Also set the dark class for Tailwind (in case we use any Tailwind dark: classes)
-    if (initialDarkMode) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  }, []);
-  
-  // Handle theme changes
-  useEffect(() => {
-    setCurrentTheme(darkMode ? THEME.dark : THEME.light);
-    
-    // Also update the dark class for Tailwind (in case we use any Tailwind dark: classes)
-    if (darkMode) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-    
-    // Store preference in localStorage
-    localStorage.setItem('darkMode', JSON.stringify(darkMode));
-    console.log('Theme updated:', darkMode ? 'dark' : 'light');
-  }, [darkMode]);
+
 
   useEffect(() => {
     if (isTyping) {
@@ -133,24 +66,14 @@ const SpellCheckLandingPage: React.FC = () => {
     return () => clearInterval(wordInterval);
   }, [isTyping, demoWords.length]);
 
-  const toggleDarkMode = (): void => {
-    setDarkMode(prev => !prev);
-  };
-
+  
   const startDemo = (): void => {
     setIsTyping(true);
     setCountdown(60);
     setCurrentWordIndex(0);
   };
 
-  const navItems: NavItem[] = [
-    { name: 'Home', href: '#' },
-    { name: 'Features', href: '#features' },
-    { name: 'How It Works', href: '#how-it-works' },
-    { name: 'Testimonials', href: '#testimonials' },
-    { name: 'Download', href: '#download' },
-  ];
-
+  
   const features: Feature[] = [
     {
       title: 'Improve Spelling Skills',
@@ -200,146 +123,6 @@ const SpellCheckLandingPage: React.FC = () => {
       transition: 'all 0.3s ease'
     }}>
       {/* Navbar */}
-      <header style={{ 
-        position: 'sticky', 
-        top: 0, 
-        zIndex: 50, 
-        backgroundColor: currentTheme.navBg,
-        boxShadow: '0 1px 2px rgba(0, 0, 0, 0.05)',
-        transition: 'all 0.3s ease'
-      }}>
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-4">
-            <div className="flex items-center">
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5 }}
-                className="flex items-center"
-              >
-                <span className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#467091] to-[#A53E3E] mr-2">SPELLCHECK</span>
-              </motion.div>
-            </div>
-
-            {/* Desktop Nav */}
-            <nav className="hidden md:flex space-x-8">
-              {navItems.map((item) => (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  style={{ 
-                    color: currentTheme.textSecondary,
-                    fontWeight: 500,
-                    transition: 'color 0.2s ease'
-                  }}
-                  className="hover:text-[#467091]"
-                >
-                  {item.name}
-                </a>
-              ))}
-            </nav>
-
-            <div className="flex items-center space-x-4">
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={toggleDarkMode}
-                style={{ 
-                  padding: '0.5rem',
-                  borderRadius: '9999px', 
-                  backgroundColor: darkMode ? '#1F2937' : '#F3F4F6',
-                  color: darkMode ? '#D1D5DB' : '#4B5563'
-                }}
-                aria-label="Toggle dark mode"
-              >
-                {darkMode ? <Sun size={20} /> : <Moon size={20} />}
-              </motion.button>
-              
-              <motion.a
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                href="#download"
-                style={{ 
-                  display: 'none',
-                  padding: '0.5rem 1rem',
-                  backgroundColor: THEME.light.accent,
-                  color: 'white',
-                  fontWeight: 500,
-                  borderRadius: '0.5rem',
-                  transition: 'background-color 0.2s ease'
-                }}
-                className="hidden md:block hover:bg-[#8a3434]"
-              >
-                Download Now
-              </motion.a>
-
-              {/* Mobile menu button */}
-              <button
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                style={{ 
-                  padding: '0.5rem',
-                  borderRadius: '0.5rem',
-                  backgroundColor: darkMode ? '#1F2937' : '#F3F4F6',
-                  color: darkMode ? '#D1D5DB' : '#4B5563'
-                }}
-                className="md:hidden"
-              >
-                {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Mobile menu */}
-        <AnimatePresence>
-          {mobileMenuOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              style={{ 
-                backgroundColor: currentTheme.navBg,
-                borderTop: `1px solid ${darkMode ? '#374151' : '#E5E7EB'}`
-              }}
-              className="md:hidden"
-            >
-              <div className="container mx-auto px-4 py-2">
-                <nav className="flex flex-col space-y-2">
-                  {navItems.map((item) => (
-                    <a
-                      key={item.name}
-                      href={item.href}
-                      style={{ 
-                        padding: '0.5rem 0',
-                        color: currentTheme.textSecondary
-                      }}
-                      className="hover:text-[#467091] font-medium"
-                      onClick={() => setMobileMenuOpen(false)}
-                    >
-                      {item.name}
-                    </a>
-                  ))}
-                  <a
-                    href="#download"
-                    style={{
-                      padding: '0.5rem 0',
-                      textAlign: 'center',
-                      backgroundColor: THEME.light.accent,
-                      color: 'white',
-                      fontWeight: 500,
-                      borderRadius: '0.5rem'
-                    }}
-                    className="hover:bg-[#8a3434]"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    Download Now
-                  </a>
-                </nav>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </header>
 
       {/* Hero Section */}
       <section style={{ 
@@ -1194,116 +977,7 @@ const SpellCheckLandingPage: React.FC = () => {
       </section>
 
       {/* Footer */}
-      <footer style={{ 
-        backgroundColor: currentTheme.footerBg,
-        color: 'white',
-        padding: '3rem 0'
-      }}>
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div>
-              <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
-                <span className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-red-400">SPELLCHECK</span>
-              </div>
-              <p style={{ color: '#9CA3AF', marginBottom: '1rem' }}>
-                Improve your spelling skills with fun, timed challenges.
-              </p>
-              <div style={{ display: 'flex', gap: '1rem' }}>
-                <a href="#" style={{ color: '#9CA3AF' }} className="hover:text-white transition-colors duration-200">
-                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path fillRule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clipRule="evenodd" />
-                  </svg>
-                </a>
-                <a href="#" style={{ color: '#9CA3AF' }} className="hover:text-white transition-colors duration-200">
-                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
-                  </svg>
-                </a>
-                <a href="#" style={{ color: '#9CA3AF' }} className="hover:text-white transition-colors duration-200">
-                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path fillRule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clipRule="evenodd" />
-                  </svg>
-                </a>
-              </div>
-            </div>
-            
-            <div>
-              <h3 style={{ fontSize: '1.125rem', fontWeight: 600, marginBottom: '1rem' }}>Product</h3>
-              <ul style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                <li><a href="#features" style={{ color: '#9CA3AF' }} className="hover:text-white transition-colors duration-200">Features</a></li>
-                <li><a href="#" style={{ color: '#9CA3AF' }} className="hover:text-white transition-colors duration-200">Pricing</a></li>
-                <li><a href="#" style={{ color: '#9CA3AF' }} className="hover:text-white transition-colors duration-200">Reviews</a></li>
-                <li><a href="#download" style={{ color: '#9CA3AF' }} className="hover:text-white transition-colors duration-200">Download</a></li>
-              </ul>
-            </div>
-            
-            <div>
-              <h3 style={{ fontSize: '1.125rem', fontWeight: 600, marginBottom: '1rem' }}>Support</h3>
-              <ul style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                <li><a href="#" style={{ color: '#9CA3AF' }} className="hover:text-white transition-colors duration-200">Help Center</a></li>
-                <li><a href="#" style={{ color: '#9CA3AF' }} className="hover:text-white transition-colors duration-200">Contact Us</a></li>
-                <li><a href="#" style={{ color: '#9CA3AF' }} className="hover:text-white transition-colors duration-200">Privacy Policy</a></li>
-                <li><a href="#" style={{ color: '#9CA3AF' }} className="hover:text-white transition-colors duration-200">Terms of Service</a></li>
-              </ul>
-            </div>
-            
-            <div>
-              <h3 style={{ fontSize: '1.125rem', fontWeight: 600, marginBottom: '1rem' }}>Stay Updated</h3>
-              <p style={{ color: '#9CA3AF', marginBottom: '1rem' }}>Subscribe to our newsletter for the latest updates and news.</p>
-              <form style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                <input 
-                  type="email" 
-                  placeholder="Your email address" 
-                  style={{
-                    width: '100%',
-                    padding: '0.5rem 1rem',
-                    backgroundColor: '#374151',
-                    border: '1px solid #4B5563',
-                    borderRadius: '0.5rem',
-                    outline: 'none',
-                    color: 'white'
-                  }}
-                  className="focus:ring-2 focus:ring-blue-500"
-                />
-                <button 
-                  type="submit" 
-                  style={{
-                    width: '100%',
-                    padding: '0.5rem 1rem',
-                    backgroundColor: '#2563EB',
-                    borderRadius: '0.5rem',
-                    fontWeight: 500,
-                    color: 'white'
-                  }}
-                  className="hover:bg-blue-700 transition-colors duration-200"
-                >
-                  Subscribe
-                </button>
-              </form>
-            </div>
-          </div>
-          
-          <div style={{
-            borderTop: '1px solid #374151',
-            marginTop: '3rem',
-            paddingTop: '2rem',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            gap: '1rem'
-          }} className="md:flex-row">
-            <p style={{ color: '#9CA3AF', marginBottom: '1rem' }} className="md:mb-0">
-              &copy; {new Date().getFullYear()} VOLTIS LABS | All rights reserved.
-            </p>
-            <div style={{ display: 'flex', gap: '1.5rem' }}>
-              <a href="#" style={{ color: '#9CA3AF' }} className="hover:text-white transition-colors duration-200">Privacy Policy</a>
-              <a href="#" style={{ color: '#9CA3AF' }} className="hover:text-white transition-colors duration-200">Terms of Service</a>
-              <a href="#" style={{ color: '#9CA3AF' }} className="hover:text-white transition-colors duration-200">Cookie Policy</a>
-            </div>
-          </div>
-        </div>
-      </footer>
+      
     </div>
   );
 };
