@@ -25,7 +25,7 @@ const PrivacyPolicyPage: React.FC = () => {
       content: [
         {
           subtitle: 'Personal Information',
-          text: 'When you create an account, we collect your name, email address, and age range to personalize your spelling practice experience. This information helps us provide age-appropriate content and track your progress.'
+          text: 'We value your privacy. When you sign up for the app, we only collect your username. This information is used solely to enable core functionality within the app, such as saving your progress and personalizing your experience. We do not collect any other personal information, such as your real name, email address, location, or device data. Your username is stored securely and is never shared with third parties.'
         },
         {
           subtitle: 'Usage Data',
@@ -52,7 +52,7 @@ const PrivacyPolicyPage: React.FC = () => {
         },
         {
           subtitle: 'Communication',
-          text: 'We may use your email address to send you important updates about the app, respond to your inquiries, and provide customer support. You can opt out of non-essential communications at any time.'
+          text: 'We do not use your information to send promotional messages, newsletters, or advertisements. All communications within the app are limited to providing essential information related to your account or app usage (if applicable). Since we only collect your username, we do not contact users through email, phone, or any other external communication channels. If in the future we introduce features that involve communication, this policy will be updated accordingly.'
         },
         {
           subtitle: 'Analytics and Improvement',
@@ -60,7 +60,7 @@ const PrivacyPolicyPage: React.FC = () => {
         },
         {
           subtitle: 'Safety and Security',
-          text: 'We use information to protect the safety and security of our users, prevent fraud, and ensure compliance with our terms of service and applicable laws.'
+          text: 'All data is stored securely, and we implement basic technical safeguards to protect against unauthorized access or misuse. We do not share, sell, or expose your information to third parties. Your data is used only to support the core functionality of the app. While no system is completely immune to risks, we are committed to continuously monitoring and improving our security practices to keep your data safe.'
         }
       ]
     },
@@ -140,7 +140,7 @@ const PrivacyPolicyPage: React.FC = () => {
       content: [
         {
           subtitle: 'COPPA Compliance',
-          text: 'SpellCheck is designed to be safe for children. We comply with the Children\'s Online Privacy Protection Act (COPPA) and do not knowingly collect personal information from children under 13 without parental consent.'
+          text: "Our app is rated 9+ and may be used by children under 13. We do not knowingly collect any personal information from users under 13 beyond what is necessary for the app's basic functionality (e.g., username). We comply with the Children’s Online Privacy Protection Act (COPPA), and if we discover that we have collected data from a child without appropriate consent, we will promptly delete it."
         },
         {
           subtitle: 'Parental Controls',
@@ -148,7 +148,7 @@ const PrivacyPolicyPage: React.FC = () => {
         },
         {
           subtitle: 'Limited Data Collection',
-          text: 'For users under 13, we collect only the minimum information necessary to provide the spelling practice service, such as progress data and basic account information.'
+          text: 'We only collect the username provided during sign-up to enable core functionality of the app. We do not collect or store any additional personal information, such as email addresses, location data, or device identifiers.'
         },
         {
           subtitle: 'No Behavioral Advertising',
