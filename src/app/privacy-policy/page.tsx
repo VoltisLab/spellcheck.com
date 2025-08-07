@@ -11,7 +11,6 @@ import {
   Mail,
   Calendar,
   FileText,
-  AlertTriangle
 } from 'lucide-react';
 import { useTheme } from '@/app/ThemeContext';
 
@@ -217,7 +216,7 @@ const PrivacyPolicyPage: React.FC = () => {
               maxWidth: '48rem',
               margin: '0 auto 2rem'
             }}>
-              We're committed to protecting your privacy and being transparent about how we collect, use, and protect your personal information when you use SpellCheck.
+              {"We're committed to protecting your privacy and being transparent about how we collect, use, and protect your personal information when you use SpellCheck."}
             </p>
             <div style={{ 
               padding: '1rem 1.5rem',
@@ -412,7 +411,7 @@ const PrivacyPolicyPage: React.FC = () => {
                 marginBottom: '1.5rem',
                 lineHeight: 1.6
               }}>
-                If you have any questions about this Privacy Policy, our data practices, or would like to exercise your privacy rights, please don't hesitate to contact us.
+                {"If you have any questions about this Privacy Policy, our data practices, or would like to exercise your privacy rights, please don't hesitate to contact us."}
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <motion.a

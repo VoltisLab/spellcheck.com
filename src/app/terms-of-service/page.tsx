@@ -9,13 +9,11 @@ import {
   AlertTriangle, 
   Gavel, 
   UserX,
-  RefreshCw,
   Calendar,
   Mail,
   Scale,
   Ban,
   Settings,
-  Globe
 } from 'lucide-react';
 import { useTheme } from '@/app/ThemeContext';
 

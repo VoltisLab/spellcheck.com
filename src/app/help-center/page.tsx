@@ -3,9 +3,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   HelpCircle, 
-  Search, 
   ChevronDown, 
-  ChevronRight,
   Book,
   Settings,
   CreditCard,
@@ -14,14 +12,9 @@ import {
   Shield,
   MessageCircle,
   Mail,
-  Phone,
-  ExternalLink,
+
   PlayCircle,
-  Star,
   Clock,
-  CheckCircle,
-  AlertCircle,
-  Lightbulb,
   Download
 } from 'lucide-react';
 import { useTheme } from '@/app/ThemeContext';
@@ -45,7 +38,6 @@ type HelpCategory = {
 
 const HelpCenterPage: React.FC = () => {
   const { darkMode, currentTheme } = useTheme();
-  const [searchQuery, setSearchQuery] = useState<string>('');
   const [expandedFAQ, setExpandedFAQ] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
 
@@ -215,10 +207,9 @@ const HelpCenterPage: React.FC = () => {
   ];
 
   const filteredFAQs = faqs.filter(faq => {
-    const matchesSearch = faq.question.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         faq.answer.toLowerCase().includes(searchQuery.toLowerCase());
+   
     const matchesCategory = selectedCategory === 'all' || faq.category === selectedCategory;
-    return matchesSearch && matchesCategory;
+    return  matchesCategory;
   });
 
   const toggleFAQ = (id: string) => {
@@ -304,10 +295,10 @@ const HelpCenterPage: React.FC = () => {
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {quickActions.map((action, index) => (
-                <Link href={action.link} >
+                <Link key={action.title} href={action.link} >
 
                 <motion.div
-                  key={action.title}
+                  
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -395,7 +386,6 @@ const HelpCenterPage: React.FC = () => {
               }}>
                 {selectedCategory === 'all' ? 'All questions' : 
                  categories.find(cat => cat.id === selectedCategory)?.title || 'Questions'} 
-                {searchQuery && ` matching "${searchQuery}"`}
               </p>
             </motion.div>
 
@@ -580,7 +570,7 @@ const HelpCenterPage: React.FC = () => {
               marginBottom: '2rem',
               lineHeight: 1.6
             }}>
-              Can't find what you're looking for? Our support team is here to help you get the most out of SpellCheck.
+              {"Can't find what you're looking for? Our support team is here to help you get the most out of SpellCheck."}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <motion.a
